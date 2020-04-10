@@ -17,6 +17,7 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.WorldBorder;
 import org.bukkit.WorldCreator;
 import org.bukkit.craftbukkit.libs.org.apache.commons.io.FileUtils;
 import org.bukkit.enchantments.Enchantment;
@@ -69,6 +70,7 @@ public class ElytraBattleGame extends Game {
 	public Chests chests = new Chests();
 	public HashMap<String, Kit> kits = new HashMap<>();
 	private int chatRemindersId = -1;
+	private int worldBorderId = -1;
 	private boolean deathmatch = false;
 
 	public ElytraBattleGame() {
@@ -187,13 +189,14 @@ public class ElytraBattleGame extends Game {
 		getScoreboard().addLine("");
 		getScoreboard().addLine(GREEN + BOLD + "Time until DM");
 		getScoreboard().addLine(GREY + (getStartTime() == 0 ? "5 minutes" : Utils.getMinsSeconds(getStartTime() + 300000 - System.currentTimeMillis())));
+		getScoreboard().addLine("");
+		getScoreboard().addLine(YELLOW + BOLD + "Border Size");
+		getScoreboard().addLine(GREY + "400 blocks");
 		getScoreboard().showScoreboardToAll();
 
 		doScoreboardUpdating(() -> {
-			if (deathmatch) {
-				stopScoreboardUpdates();
-			}
 			getScoreboard().setLine(2, GREY + (getStartTime() == 0 ? "5 minutes" : Utils.getMinsSeconds(getStartTime() + 300000 - System.currentTimeMillis())));
+			getScoreboard().setLine(5, GREY + ((int) playingWorld.getWorldBorder().getSize()) + " blocks"); 
 		});
 
 		doCountdown(() -> {
@@ -285,6 +288,7 @@ public class ElytraBattleGame extends Game {
 		});
 		
 		Bukkit.getScheduler().cancelTask(chatRemindersId);
+		Bukkit.getScheduler().cancelTask(worldBorderId);
 		
 		deregisterAllEvents();
 		stopScoreboardUpdates();
@@ -307,11 +311,16 @@ public class ElytraBattleGame extends Game {
 
 	public void startDeathmatch() {
 
-		/*
-		 * For some reason, the Spigot API doesn't work with the shrinking border.
-		 * To optimise performance, I just cheated.
-		 */
-		Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "worldborder set 100 90");
+		worldBorderId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), () -> {
+			WorldBorder border = playingWorld.getWorldBorder();
+			if (border.getSize() <= 100) {
+				Bukkit.getScheduler().cancelTask(worldBorderId);
+			}
+			else {
+				border.setSize(border.getSize() - 0.15);
+			}
+		}, 0, 1);
+		
 		deathmatch = true;
 
 		broadcastIntroduction("This is deathmatch!", "The border is shrinking to 100x100 very quickly.", "Get to the centre and be the last one standing.");
@@ -322,11 +331,16 @@ public class ElytraBattleGame extends Game {
 		getScoreboard().setLine(1, GREEN + BOLD + "Deathmatch Time");
 		getScoreboard().setLine(2, GREY + getScoreboardFriendlyTime());
 		getScoreboard().setLine(3, "");
-		getScoreboard().setLine(4, YELLOW + BOLD + "Players Alive");
+		getScoreboard().setLine(4, YELLOW + BOLD + "Border Size");
+		getScoreboard().setLine(5, GREY + "400 blocks");
+		getScoreboard().setLine(6, "");
+		getScoreboard().setLine(7, AQUA + BOLD + "Players Alive");
 		
 		doScoreboardUpdating(() -> {
 			getScoreboard().setLine(2, GREY + getScoreboardFriendlyTime());
-			int count = 5;
+			getScoreboard().setLine(5, GREY + ((int) playingWorld.getWorldBorder().getSize()) + " blocks"); 
+			
+			int count = 8;
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				if (p.getGameMode() == GameMode.SURVIVAL) {
 					getScoreboard().setLine(count, GREY + p.getName() + " " + getKills(p.getName()));
