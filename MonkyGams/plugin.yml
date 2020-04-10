@@ -1,0 +1,6 @@
+name: MonkyGams
+main: core.Main
+description: Shit
+author: Tom
+version: 1.0
+api-version: 1.15
