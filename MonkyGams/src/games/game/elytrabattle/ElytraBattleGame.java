@@ -313,7 +313,7 @@ public class ElytraBattleGame extends Game {
 
 		worldBorderId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), () -> {
 			WorldBorder border = playingWorld.getWorldBorder();
-			if (border.getSize() <= 100) {
+			if (border.getSize() <= 101) {
 				Bukkit.getScheduler().cancelTask(worldBorderId);
 			}
 			else {
@@ -446,9 +446,9 @@ public class ElytraBattleGame extends Game {
 		GameUtils.delayTask(() -> {
 			p.spawnParticle(Particle.EXPLOSION_HUGE, p.getLocation().subtract(0, 1, 0), 1);
 			
-			for (int x = randomLocation.getBlockX() - 2; x <= randomLocation.getBlockX() + 2; x++) {
+			for (int x = randomLocation.getBlockX() - 3; x <= randomLocation.getBlockX() + 3; x++) {
 				for (int y = randomLocation.getBlockY() - 1; y <= randomLocation.getBlockY() + 3; y++) {
-					for (int z = randomLocation.getBlockZ() - 2; z <= randomLocation.getBlockZ() + 2; z++) {
+					for (int z = randomLocation.getBlockZ() - 3; z <= randomLocation.getBlockZ() + 3; z++) {
 						p.getWorld().getBlockAt(x, y, z).setType(Material.AIR);
 					}
 				}

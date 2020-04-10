@@ -41,15 +41,15 @@ public class RopeEvent implements Listener {
 		c.addPassenger(p);
 		
 		Location location = p.getLocation();
-		for (int y = 0; y != 10; y++) {
-			int relativeY = y * 3 / 10;
+		for (int y = 0; y != 20; y++) {
+			int relativeY = y * 3 / 20;
 			GameUtils.delayTask(() -> {
 				for (int degree = 0; degree < 6; degree++) {
 					double radians = Math.toRadians(degree * 60);
 					double x = Math.cos(radians);
 					double z = Math.sin(radians);
 					location.add(x, relativeY, z);
-					location.getWorld().spawnParticle(Particle.SNOW_SHOVEL, location, 1);
+					location.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, location, 1);
 					p.playSound(location, Sound.BLOCK_FIRE_EXTINGUISH, 2, 1);
 					location.subtract(x, relativeY, z);
 				}

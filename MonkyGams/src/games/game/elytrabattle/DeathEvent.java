@@ -56,6 +56,7 @@ public class DeathEvent implements Listener {
 		Player p = (Player) e.getEntity();
 		
 		if (p.getHealth() - e.getDamage() < 0) {
+			e.setDamage(0);
 			e.setCancelled(true);
 			
 			String cause = GameUtils.getStringFromDamageCause(e.getCause());
