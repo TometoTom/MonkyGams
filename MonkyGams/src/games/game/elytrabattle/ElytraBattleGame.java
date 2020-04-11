@@ -116,7 +116,7 @@ public class ElytraBattleGame extends Game {
 		registerEvent(new CompassEvents());
 		registerEvent(new KitSelectorEvent());
 		registerEvent(chests);
-		deregisterEvent(new JoinEvent());
+		registerEvent(new JoinEvent());
 
 	}
 

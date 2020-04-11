@@ -1,58 +1,51 @@
-package command.commands.game;
+package games.game.kitpvp;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import command.meta.Args;
 import command.meta.CommandCompatibility;
 import command.meta.MonkyCommand;
 import command.meta.PermissionLevel;
-import games.game.elytrabattle.ElytraBattleGame;
-import games.game.elytrabattle.Kit;
-import games.meta.GameController;
 
-public class KitCommand extends MonkyCommand {
+public class DuelCommand extends MonkyCommand {
+
+	String s = ChatColor.GOLD + "" + ChatColor.BOLD + "DUEL: " + ChatColor.RESET + "" + ChatColor.GRAY;
+	public static Duel dl = null;
 
 	@Override
 	public void onCommand(Player p, Args args) {
 		
 		if (args.isEmpty()) {
-			f(p, "You must enter a kit name.");
+			p.sendMessage(s + "Usage: /duel [player]");
 			return;
 		}
 		
-		ElytraBattleGame g = GameController.getCurrentGame(ElytraBattleGame.class);
-		
-		if (g == null) {
-			f(p, "There is no elytra battle game going on right now.");
+		Player t = getPlayer(args.get(0));
+		if (t==null){
+			p.sendMessage(s + args.get(0) + " is not online.");
 			return;
 		}
 		
-		for (Kit k : Kit.values()) {
-			if (k.getName().equalsIgnoreCase(args.getText())) {
-				s(p, "You picked kit " + k.getName() + ".");
-				g.kits.put(p.getName(), k);
-				return;
-			}
-		}
-		
-		f(p, "Couldn't find that kit.");
-		return;
+		new MapInventory(p);
+		Duel d = new Duel(p, t, DuelMap.ARENA);
+		dl = d;
 		
 	}
 
 	@Override
 	public String getName() {
-		return "elytrabattlekit";
+		return "duel";
 	}
 
 	@Override
 	public String getDescription() {
-		return "Choose your kit";
+		return "Duel someone in Kit PvP!";
 	}
 
 	@Override
 	public String getUsage() {
-		return "";
+		return "[player]";
 	}
 
 	@Override
@@ -69,7 +62,5 @@ public class KitCommand extends MonkyCommand {
 	public CommandCompatibility getCommandCompatibility() {
 		return CommandCompatibility.GAME;
 	}
-
-	
 	
 }

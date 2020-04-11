@@ -86,6 +86,7 @@ public class GameCountdown {
 	}
 	
 	public void stopMovement(Player p) {
+		p.sendMessage("Stop movement");
 		Chicken c = (Chicken) p.getWorld().spawnEntity(p.getLocation(), EntityType.CHICKEN);
 		c.setInvulnerable(true);
 		c.setAI(false);

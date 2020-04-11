@@ -64,6 +64,30 @@ public class CommandManager {
 		}
 
 	}
+	
+	public static void registerCommand(MonkyCommand c) {
+		CommandMap map = getCommandMap();
+		PluginCommand pc = getPluginCommand(c.getName(), Main.getPlugin());
+		pc.setAliases(Arrays.asList(c.getAliases()));
+		map.register(Main.getPluginName(), pc);
+		pc.setExecutor(new CommandListener());
+	}
+	
+	public static void deregisterCommand(MonkyCommand c) {
+		
+		try {
+			CommandMap map = getCommandMap();
+			PluginCommand pc = getPluginCommand(c.getName(), Main.getPlugin());
+			pc.unregister(map);
+//			Field f = map.getClass().getDeclaredField("knownCommands");
+//			f.setAccessible(true);
+//			@SuppressWarnings("unchecked")
+//			HashMap<String, Command> knownCommands = (HashMap<String, Command>) f.get(map);
+//			knownCommands.remove(c.getName());
+		} catch (Exception e) {
+			
+		}
+	}
 
 	private static CommandMap getCommandMap() {
 

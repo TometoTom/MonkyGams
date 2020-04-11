@@ -8,6 +8,7 @@ import core.data.PlayerStatisticsManager;
 import games.game.dropper.DropperGame;
 import games.game.elytrabattle.ElytraBattleGame;
 import games.game.elytraparkour.ElytraParkourGame;
+import games.game.kitpvp.KitPVPGame;
 import games.game.lobby.LobbyGame;
 import games.game.monkykart.MonkyKartGame;
 import games.game.parkourrace.ParkourRaceGame;
@@ -119,6 +120,11 @@ public class GameController {
 		}
 		if (g == GameType.ELYTRABATTLE) {
 			currentGame = new ElytraBattleGame();
+			currentGame.start();
+			return true;
+		}
+		if (g == GameType.KITPVP) {
+			currentGame = new KitPVPGame(m);
 			currentGame.start();
 			return true;
 		}

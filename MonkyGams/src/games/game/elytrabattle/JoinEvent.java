@@ -29,6 +29,7 @@ public class JoinEvent implements Listener {
 		ElytraBattleGame game = GameController.getCurrentGame(ElytraBattleGame.class);
 		
 		ArrayList<Player> alivePlayers = game.getAlivePlayers();
+		
 		if (alivePlayers.size() == 1) {
 			game.win(alivePlayers.get(0));
 		}

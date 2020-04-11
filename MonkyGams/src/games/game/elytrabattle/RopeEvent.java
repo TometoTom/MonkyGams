@@ -41,8 +41,8 @@ public class RopeEvent implements Listener {
 		c.addPassenger(p);
 		
 		Location location = p.getLocation();
-		for (int y = 0; y != 20; y++) {
-			int relativeY = y * 3 / 20;
+		for (int y = 0; y != 10; y++) {
+			int relativeY = y * 3 / 10;
 			GameUtils.delayTask(() -> {
 				for (int degree = 0; degree < 6; degree++) {
 					double radians = Math.toRadians(degree * 60);

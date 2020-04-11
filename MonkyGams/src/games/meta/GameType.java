@@ -14,6 +14,7 @@ public enum GameType {
 	ELYTRAPARKOUR("Elytra Parkour", 1, Material.ELYTRA, null, ElytraParkourStatistics.class),
 	PARKOURRACE("Parkour Race", 1, Material.FEATHER, null, ParkourRaceStatistics.class),
 	ELYTRABATTLE("Elytra Battle", 1, Material.GOLDEN_SWORD, Kit.class, ElytraBattleStatistics.class),
+	KITPVP("Kit PvP", 1, Material.SHIELD, null, null),
 	MONKYKART("Monky Kart", 1, Material.MINECART, null, null),
 	DROPPER("Dropper", 1, Material.CAULDRON, null, DefaultStatistics.class),
 	LOBBY("Lobby", 0, Material.RED_BED, null, null);
