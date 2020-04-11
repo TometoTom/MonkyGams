@@ -570,7 +570,7 @@ public class InteractEvent implements Listener{
 						Block block = p.getTargetBlock(transparent, 15);
 						
 						for (Block b : p.getLineOfSight(transparent, 15)){
-							b.getWorld().spawnParticle(Particle.BLOCK_DUST, b.getLocation(), 1);
+							b.getWorld().spawnParticle(Particle.CRIT_MAGIC, b.getLocation(), 1);
 						}
 						
 						Location l = p.getLocation();

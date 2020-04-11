@@ -13,6 +13,7 @@ import utils.game.GameListeners;
 public class KitPVPGame extends Game {
 
 	DuelCommand duelCommand = new DuelCommand();
+	KitCommand kitCommand = new KitCommand();
 	
 	public KitPVPGame(Map map) {
 		super(GameType.KITPVP, map);
@@ -21,6 +22,7 @@ public class KitPVPGame extends Game {
 	@Override
 	protected void registerListeners() {
 		CommandManager.registerCommand(duelCommand);
+		CommandManager.registerCommand(kitCommand);
 		
 		registerEvent(new ArrowHitEvent());
 		registerEvent(new ClickEntityEvent());
@@ -48,11 +50,12 @@ public class KitPVPGame extends Game {
 		registerListeners();
 		
 		Bukkit.getOnlinePlayers().forEach(p -> {
+			p.getInventory().clear();
 			p.teleport(new Location(Bukkit.getWorld("world"), -151.49849408118314, 93.5, -36.48180761416791, 91.0011f, 8.532448f));
 		});
 		
 		broadcastIntroduction("This is the old Max Poo PvP 2.0 from many years ago.",
-				"There's going to be loads of bugs because I copied and pasted the code.",
+				"There's going to be loads of bugs.",
 				"Apologies for the racism and the icky rubbish.",
 				"Have fun!");
 		
