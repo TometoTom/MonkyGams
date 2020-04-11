@@ -22,7 +22,7 @@ public class RespawnEvent implements Listener{
 	public void onRespawn(PlayerRespawnEvent e){
 		
 		giveKit(e.getPlayer());
-		e.getPlayer().teleport(new Location(Bukkit.getWorld("world"), -151.49849408118314, 93.5, -36.48180761416791, 91.0011f, 8.532448f));
+		e.getPlayer().teleport(new Location(Bukkit.getWorld("world"), -151.5761982659841, 93.5, -36.4390718566802, 90.58295f, 2.1032238f));
 		
 	}
 	
@@ -42,7 +42,7 @@ public class RespawnEvent implements Listener{
 		ItemStack bow = new ItemStack(Material.BOW);
 		ItemStack arrow = new ItemStack(Material.ARROW);
 		ItemStack rod = new ItemStack(Material.FISHING_ROD);
-		ItemStack apple = new ItemStack(Material.GOLDEN_APPLE, 3, (short) 1);
+		ItemStack apple = new ItemStack(Material.ENCHANTED_GOLDEN_APPLE, 3);
 		ItemStack food = new ItemStack(Material.BREAD, 64);
 		
 		ItemMeta swordm = sword.getItemMeta();

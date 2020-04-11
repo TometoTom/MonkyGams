@@ -297,13 +297,13 @@ public class InteractEvent implements Listener{
 			                    public void run() {
 			                        
 			                    			b.getWorld().playEffect(b.getLocation(), Effect.STEP_SOUND, 45, 10);
-					                    	b.setType(Material.BRICK);
+					                    	b.setType(Material.BRICKS);
 					                    	
 					                    	Location loc = b.getLocation();
 					                    	
 					                    	while(loc.subtract(0, 1, 0).getBlock().getType()==Material.AIR){
 						                    	loc.getWorld().playEffect(loc, Effect.STEP_SOUND, 45, 30);
-					                    		loc.getBlock().setType(Material.BRICK);
+					                    		loc.getBlock().setType(Material.BRICKS);
 					                    	}
 			                    }
 			                }, i);
@@ -422,7 +422,6 @@ public class InteractEvent implements Listener{
 			                        	v.setCustomName(color + "" + ChatColor.BOLD + name + " the immigrant");
 			                        	v.setCustomNameVisible(false);
 			                        	v.setCanPickupItems(false);
-			                        	if (Names.special.contains(name)) v.setVillager(true);
 			                        	v.setVelocity(p.getLocation().getDirection().multiply(3));
 			                        	v.setBaby(false);
 			                        	EntityEquipment ee = v.getEquipment();
@@ -513,14 +512,10 @@ public class InteractEvent implements Listener{
 						p.sendMessage(s + "You used " + ChatColor.BOLD + Kit.kits.get(p).getSkillName() + ChatColor.RESET + "" + ChatColor.GRAY + ".");
 						
 						final int taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), new Runnable() {
-		                        @SuppressWarnings("deprecation")
 								public void run() {
 		    						if (p.isBlocking()){
 			                        	
-		    							DyeColor color = DyeColor.YELLOW;
-		    							byte data = (byte) (15 - color.getDyeData());
-
-		    							ItemStack it = new ItemStack(Material.INK_SAC, 1, data);
+		    							ItemStack it = new ItemStack(Material.YELLOW_DYE);
 		    							
 		    							Item i = p.getWorld().dropItemNaturally(p.getLocation().add(0, 1, 0), it);
 		    							i.setCustomName(ChatColor.GOLD + "" + ChatColor.BOLD + "POPCORN");
