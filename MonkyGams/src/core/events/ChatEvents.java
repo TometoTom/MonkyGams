@@ -14,6 +14,7 @@ import core.data.RankManager;
 import games.game.elytraparkour.ShowHidePlayerEvents;
 import games.meta.Game;
 import games.meta.GameController;
+import hub.gadgets.meta.Gadget;
 import net.md_5.bungee.api.ChatColor;
 import utils.npc.NPCManager;
 
@@ -42,6 +43,7 @@ public class ChatEvents implements Listener {
 		e.setQuitMessage(null);
 		Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + "- " + ChatColor.RESET + "" + ChatColor.GRAY + e.getPlayer().getName());
 		
+		Gadget.disableAllGadgets(e.getPlayer());
 		Game g = GameController.getCurrentGame();
 		if (g != null) {
 			g.getStats().getLeaveTimes().put(e.getPlayer().getName(), System.currentTimeMillis());

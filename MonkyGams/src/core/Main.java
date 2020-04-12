@@ -32,6 +32,7 @@ import games.meta.GameJoinEvent;
 import games.meta.GameType;
 import games.meta.Map;
 import hub.HubManager;
+import hub.gadgets.meta.GadgetUseEvent;
 import net.md_5.bungee.api.ChatColor;
 import utils.SerialisableLocation;
 import utils.game.GameUtils;
@@ -67,6 +68,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new StatsGUIEvents(), this);
 		Bukkit.getPluginManager().registerEvents(new NPCInteractEvent(), this);
 		Bukkit.getPluginManager().registerEvents(new GameJoinEvent(), this);
+		Bukkit.getPluginManager().registerEvents(new GadgetUseEvent(), this);
 		
 		CommandManager.registerCommands();
 

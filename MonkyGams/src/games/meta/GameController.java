@@ -15,6 +15,7 @@ import games.game.parkourrace.ParkourRaceGame;
 import games.meta.statistics.DataRecorder;
 import games.meta.statistics.GameStatistics;
 import games.meta.statistics.XPCalculation;
+import hub.gadgets.meta.Gadget;
 
 public class GameController {
 
@@ -70,6 +71,8 @@ public class GameController {
 				e.printStackTrace();
 			}
 		}
+		
+		Gadget.disableAllGadgets();
 		
 		currentGame.cancelCountdown();
 		currentGame.end();

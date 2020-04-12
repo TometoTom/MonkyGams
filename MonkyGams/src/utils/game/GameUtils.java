@@ -164,6 +164,10 @@ public class GameUtils {
 	public static void repeatTask(Runnable task, int periodBetween, int times) {
 		repeatTask(task, 0, periodBetween, times);
 	}
+	
+	public static int repeatTaskForever(Runnable task, int initialDelay, int periodBetween) {
+		return Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), task, initialDelay, periodBetween);
+	}
 
 	public static void delayTask(Runnable task, int delay) {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), task, delay);

@@ -14,6 +14,7 @@ import command.commands.game.CountdownCommand;
 import command.commands.game.GameCommand;
 import command.commands.game.KitCommand;
 import command.commands.game.MapCommand;
+import command.commands.hub.GadgetCommand;
 import command.commands.other.AnvilCommand;
 import command.commands.other.DebugCommand;
 import command.commands.other.LobbyCommand;
@@ -52,6 +53,7 @@ public class CommandManager {
 		new LobbyCommand();
 		new StatsCommand();
 		new KitCommand();
+		new GadgetCommand();
 
 		CommandMap map = getCommandMap();
 		
