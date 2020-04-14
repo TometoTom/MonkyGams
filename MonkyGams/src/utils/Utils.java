@@ -6,13 +6,45 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import net.md_5.bungee.api.ChatColor;
 
 public class Utils {
 
+	public static void glow(ItemStack i) {
+		
+		if (i == null)
+			return;
+		
+		ItemMeta meta = i.getItemMeta();
+		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		i.setItemMeta(meta);
+		i.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+		
+	}
+	
+	public static void removeGlow(ItemStack i) {
+
+		if (i == null)
+			return;
+		
+		i.removeEnchantment(Enchantment.DURABILITY);
+		
+	}
+	
+	public static boolean isGlowing(ItemStack i) {
+		
+		if (i == null)
+			return false;
+		
+		return i.containsEnchantment(Enchantment.DURABILITY);
+	}
+	
 	public static String bold(String s) {
 		return ChatColor.BOLD + s + ChatColor.RESET + "" + ChatColor.GRAY;
 	}

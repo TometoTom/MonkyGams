@@ -15,6 +15,7 @@ import command.commands.game.GameCommand;
 import command.commands.game.KitCommand;
 import command.commands.game.MapCommand;
 import command.commands.hub.GadgetCommand;
+import command.commands.hub.KitsCommand;
 import command.commands.other.AnvilCommand;
 import command.commands.other.DebugCommand;
 import command.commands.other.LobbyCommand;
@@ -28,6 +29,7 @@ import command.commands.utils.HealCommand;
 import command.commands.utils.HealthCommand;
 import command.commands.utils.KillCommand;
 import command.commands.utils.LocationCommand;
+import command.commands.utils.ProfileCommand;
 import command.commands.utils.TeleportCommand;
 import core.Main;
 
@@ -54,6 +56,9 @@ public class CommandManager {
 		new StatsCommand();
 		new KitCommand();
 		new GadgetCommand();
+		new ProfileCommand();
+		new GadgetCommand();
+		new KitsCommand();
 
 		CommandMap map = getCommandMap();
 		

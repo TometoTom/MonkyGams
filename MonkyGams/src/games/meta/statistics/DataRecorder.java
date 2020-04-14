@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.bukkit.Location;
 
+import games.meta.Kit;
 import utils.MonkyHashMap;
 
 public class DataRecorder {
@@ -15,6 +16,7 @@ public class DataRecorder {
 	private MonkyHashMap<String> kills;
 	private HashMap<String, Long> joinTimes;
 	private HashMap<String, Long> leaveTimes;
+	private HashMap<String, Kit> kits;
 	
 	public DataRecorder() {
 		this.deaths = new MonkyHashMap<>();
@@ -23,6 +25,7 @@ public class DataRecorder {
 		this.kills = new MonkyHashMap<>();
 		this.joinTimes = new HashMap<>();
 		this.leaveTimes = new HashMap<>();
+		this.kits  = new HashMap<>();
 	}
 	
 	public MonkyHashMap<String> getDeaths() {
@@ -55,6 +58,14 @@ public class DataRecorder {
 
 	public HashMap<String, Long> getLeaveTimes() {
 		return leaveTimes;
+	}
+
+	public HashMap<String, Kit> getKits() {
+		return kits;
+	}
+
+	public void setKits(HashMap<String, Kit> kits) {
+		this.kits = kits;
 	}
 	
 }

@@ -1,10 +1,12 @@
 package core.data;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import command.meta.PermissionLevel;
 import games.meta.GameType;
 import games.meta.statistics.GameStatistics;
+import hub.gadgets.meta.GadgetType;
 
 public class PlayerStatistics {
 
@@ -18,8 +20,15 @@ public class PlayerStatistics {
 	private int timesLoggedIn;
 	private String lastUsedIP;
 	
+	/* Additions */
+	private HashMap<GadgetType, Integer> gadgets;
+	private ArrayList<String> unlockedKits; // Stored as key: "Game Name:Kit Name". The game and kit names are specified in the relevant enums.
+	private String customName;
+	private String location;
+	
 	public PlayerStatistics(String uuid, PermissionLevel rank, int currency, HashMap<GameType, GameStatistics> gameStatistics, int totalXP,
-			int totalChatMessages, int totalBlocksWalked, int timesLoggedIn, String lastUsedIP) {
+			int totalChatMessages, int totalBlocksWalked, int timesLoggedIn, String lastUsedIP,
+			HashMap<GadgetType, Integer> gadgets, ArrayList<String> unlockedKits, String customName, String location) {
 		this.uuid = uuid;
 		this.rank = rank;
 		this.currency = currency;
@@ -29,6 +38,12 @@ public class PlayerStatistics {
 		this.totalBlocksWalked = totalBlocksWalked;
 		this.timesLoggedIn = timesLoggedIn;
 		this.lastUsedIP = lastUsedIP;
+		
+		/* Additions */
+		this.gadgets = gadgets == null ? new HashMap<>() : gadgets;
+		this.unlockedKits = unlockedKits == null ? new ArrayList<>() : unlockedKits;
+		this.customName = customName == null ? "" : customName;
+		this.location = location == null ? "Earth" : location;
 	}
 	
 	public int getTotalXP() {
@@ -133,6 +148,42 @@ public class PlayerStatistics {
 
 	public void setCurrency(int currency) {
 		this.currency = currency;
+	}
+
+	public HashMap<GadgetType, Integer> getGadgets() {
+		if (gadgets == null) gadgets = new HashMap<GadgetType, Integer>();
+		return gadgets;
+	}
+
+	public void setGadgets(HashMap<GadgetType, Integer> gadgets) {
+		this.gadgets = gadgets;
+	}
+
+	public ArrayList<String> getUnlockedKits() {
+		if (unlockedKits == null) unlockedKits = new ArrayList<>();
+		return unlockedKits;
+	}
+
+	public void setUnlockedKits(ArrayList<String> unlockedKits) {
+		this.unlockedKits = unlockedKits;
+	}
+
+	public String getCustomName() {
+		if (customName == null) customName = "";
+		return customName;
+	}
+
+	public void setCustomName(String customName) {
+		this.customName = customName;
+	}
+
+	public String getLocation() {
+		if (location == null) location = "";
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 	
 }

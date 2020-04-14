@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Random;
 
@@ -51,6 +50,7 @@ import games.game.lobby.LobbyGame;
 import games.meta.Game;
 import games.meta.GameController;
 import games.meta.GameType;
+import games.meta.Kit;
 import games.meta.Map;
 import games.meta.statistics.ElytraBattleStatistics;
 import utils.MonkyItemStack;
@@ -68,7 +68,6 @@ public class ElytraBattleGame extends Game {
 
 	private Reminders reminders = new Reminders();
 	public Chests chests = new Chests();
-	public HashMap<String, Kit> kits = new HashMap<>();
 	private int chatRemindersId = -1;
 	private int worldBorderId = -1;
 	private boolean deathmatch = false;
@@ -201,7 +200,7 @@ public class ElytraBattleGame extends Game {
 
 		doCountdown(() -> {
 			
-			for (Entry<String, Kit> e : kits.entrySet()) {
+			for (Entry<String, Kit> e : getStats().getKits().entrySet()) {
 				Player kitter = Bukkit.getPlayer(e.getKey());
 				kitter.sendMessage(GameUtils.getSuccessMessage("GAME", "You are using kit " + e.getValue().getName() + "."));
 				e.getValue().getGameStart().doKit(kitter, this);
@@ -424,12 +423,15 @@ public class ElytraBattleGame extends Game {
 		if (firstTime) {
 			NPC npc = new NPC(randomLocation.add(1, 0, 1), "7a5b3c66f4d145c2871e28cfc241bc4c", GOLD + BOLD + "CHOOSE KIT");
 			npc.setClickEvent((player) -> {
-				Inventory i = Bukkit.createInventory(null, ((Kit.values().length / 9) * 9) + 9, GOLD + BOLD + "Choose Kit");
-				for (Kit k : Kit.values()) {
+				Inventory i = Bukkit.createInventory(null, ((Kit.getKits(getType()).size() / 9) * 9) + 9, GOLD + BOLD + "Choose Kit");
+				for (Kit k : Kit.getKits(getType())) {
+					
+					boolean unlocked = k.isUnlocked(player);
+					
 					MonkyItemStack item = new MonkyItemStack(k.getIcon())
 					.setName(GOLD + BOLD + k.getName())
-					.setLore(ChatColor.GRAY + k.getDescription(), "", GREEN + BOLD + "UNLOCKED");
-					if (kits.containsKey(p.getName()) && kits.get(p.getName()) == k) {
+					.setLore(ChatColor.GRAY + k.getDescription(), "", (unlocked ? GREEN + BOLD + "UNLOCKED" : RED + BOLD + "LOCKED"));
+					if (getStats().getKits().containsKey(p.getName()) && getStats().getKits().get(p.getName()) == k) {
 						item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
 						ItemMeta meta = item.getItemMeta();
 						meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);

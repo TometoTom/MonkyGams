@@ -9,6 +9,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import games.meta.GameController;
+import games.meta.GameType;
+import games.meta.Kit;
 import utils.Utils;
 import utils.game.GameUtils;
 
@@ -26,11 +28,20 @@ public class KitSelectorEvent implements Listener {
 			
 			Bukkit.getPlayer(e.getWhoClicked().getName()).playSound(e.getWhoClicked().getLocation(), Sound.UI_STONECUTTER_SELECT_RECIPE, 10, 1);
 			
-			for (Kit k : Kit.values()) {
+			for (Kit k : Kit.getKits(GameType.ELYTRABATTLE)) {
 				if (k.getIcon() == i.getType()) {
-					e.getWhoClicked().closeInventory();
-					GameController.getCurrentGame(ElytraBattleGame.class).kits.put(e.getWhoClicked().getName(), k);
-					e.getWhoClicked().sendMessage(GameUtils.getSuccessMessage("KIT", "You selected " + Utils.bold(k.getName()) + "."));
+					
+					if (k.isUnlocked(Bukkit.getPlayer(e.getWhoClicked().getName()))) {
+						e.getWhoClicked().closeInventory();
+						GameController.getCurrentGame().getStats().getKits().put(e.getWhoClicked().getName(), k);
+						e.getWhoClicked().sendMessage(GameUtils.getSuccessMessage("KIT", "You selected " + Utils.bold(k.getName()) + "."));
+						return;
+					}
+					else {
+						e.getWhoClicked().sendMessage(GameUtils.getFailureMessage("KIT", "You haven't unlocked this kit yet!"));
+						return;
+					}
+					
 				}
 			}
 			

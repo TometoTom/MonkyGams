@@ -6,9 +6,9 @@ import command.meta.Args;
 import command.meta.CommandCompatibility;
 import command.meta.MonkyCommand;
 import command.meta.PermissionLevel;
-import games.game.elytrabattle.ElytraBattleGame;
-import games.game.elytrabattle.Kit;
+import games.meta.Game;
 import games.meta.GameController;
+import games.meta.Kit;
 
 public class KitCommand extends MonkyCommand {
 
@@ -20,17 +20,23 @@ public class KitCommand extends MonkyCommand {
 			return;
 		}
 		
-		ElytraBattleGame g = GameController.getCurrentGame(ElytraBattleGame.class);
+		Game g = GameController.getCurrentGame();
 		
 		if (g == null) {
-			f(p, "There is no elytra battle game going on right now.");
+			f(p, "There is no game going on right now.");
 			return;
 		}
 		
-		for (Kit k : Kit.values()) {
+		for (Kit k : Kit.getKits(g.getType())) {
 			if (k.getName().equalsIgnoreCase(args.getText())) {
+				
+				if (k.isUnlocked(p)) {
+					f(p, "You haven't unlocked this kit.");
+					return;
+				}
+				
 				s(p, "You picked kit " + k.getName() + ".");
-				g.kits.put(p.getName(), k);
+				g.getStats().getKits().put(p.getName(), k);
 				return;
 			}
 		}
@@ -42,7 +48,7 @@ public class KitCommand extends MonkyCommand {
 
 	@Override
 	public String getName() {
-		return "elytrabattlekit";
+		return "kit";
 	}
 
 	@Override

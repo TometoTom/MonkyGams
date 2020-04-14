@@ -25,6 +25,7 @@ import core.events.PingEvent;
 import core.events.SignTPEvent;
 import core.events.StatisticEvents;
 import core.events.StatsGUIEvents;
+import games.game.elytrabattle.ElytraBattleKits;
 import games.game.elytraparkour.Boost;
 import games.game.lobby.LobbyGame;
 import games.meta.GameController;
@@ -36,6 +37,7 @@ import hub.gadgets.meta.GadgetUseEvent;
 import net.md_5.bungee.api.ChatColor;
 import utils.SerialisableLocation;
 import utils.game.GameUtils;
+import utils.gui.ClickEventHandler;
 import utils.npc.NPCInteractEvent;
 import utils.npc.NPCManager;
 
@@ -69,6 +71,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new NPCInteractEvent(), this);
 		Bukkit.getPluginManager().registerEvents(new GameJoinEvent(), this);
 		Bukkit.getPluginManager().registerEvents(new GadgetUseEvent(), this);
+		Bukkit.getPluginManager().registerEvents(new ClickEventHandler(), this);
 		
 		CommandManager.registerCommands();
 
@@ -108,12 +111,14 @@ public class Main extends JavaPlugin {
 			GameUtils.delayTask(() -> HubManager.setup(), 1);
 		}
 
+		ElytraBattleKits.setup();
+		
 	}
 
 	@Override
 	public void onDisable() {
 		
-		GameController.endCurrentGame(false);
+		GameController.endCurrentGame(false, null);
 		
 		NPCManager.getNpcs().forEach(npc -> npc.despawn());
 		

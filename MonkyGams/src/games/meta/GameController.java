@@ -1,5 +1,7 @@
 package games.meta;
 
+import java.util.HashMap;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -20,6 +22,7 @@ import hub.gadgets.meta.Gadget;
 public class GameController {
 
 	private static Game currentGame;
+	private static HashMap<String, Kit> nextGameKits = new HashMap<>();
 
 	public static Game getCurrentGame() {
 		
@@ -42,10 +45,10 @@ public class GameController {
 	}
 	
 	public static void endCurrentGame() {
-		endCurrentGame(true);
+		endCurrentGame(true, currentGame.getType());
 	}
 	
-	public static void endCurrentGame(boolean startLobby) {
+	public static void endCurrentGame(boolean startLobby, GameType queuedGame) {
 		
 		if (currentGame == null) return;
 		
@@ -66,6 +69,7 @@ public class GameController {
 					XPCalculation xp = new XPCalculation(recorder);
 					ps.setCurrency(ps.getCurrency() + xp.getTimePounds(p));
 					ps.setTotalXP(ps.getTotalXP() + xp.getTimeXP(p));
+					
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -78,10 +82,8 @@ public class GameController {
 		currentGame.end();
 		
 		if (startLobby) {
-			if (!(currentGame instanceof LobbyGame)) {
-				currentGame = new LobbyGame(currentGame.getType());
-				currentGame.start();
-			}
+			currentGame = new LobbyGame(queuedGame);
+			currentGame.start();
 		}
 		
 	}
@@ -96,45 +98,60 @@ public class GameController {
 			currentGame.end();
 		}
 		
+		boolean gameStarted = false;
 		if (g == GameType.ELYTRAPARKOUR) {
 			currentGame = new ElytraParkourGame(m);
 			currentGame.start();
-			return true;
+			gameStarted = true;
 		}
-		if (g == GameType.LOBBY) {
+		else if (g == GameType.LOBBY) {
 			currentGame = new LobbyGame(GameType.ELYTRAPARKOUR, m);
 			currentGame.start();
-			return true;
+			gameStarted = true;
 		}
-		if (g == GameType.PARKOURRACE) {
+		else if (g == GameType.PARKOURRACE) {
 			currentGame = new ParkourRaceGame(m);
 			currentGame.start();
-			return true;
+			gameStarted = true;
 		}
-		if (g == GameType.DROPPER) {
+		else if (g == GameType.DROPPER) {
 			currentGame = new DropperGame(m);
 			currentGame.start();
-			return true;
+			gameStarted = true;
 		}
-		if (g == GameType.MONKYKART) {
+		else if (g == GameType.MONKYKART) {
 			currentGame = new MonkyKartGame(m);
 			currentGame.start();
-			return true;
+			gameStarted = true;
 		}
-		if (g == GameType.ELYTRABATTLE) {
+		else if (g == GameType.ELYTRABATTLE) {
 			currentGame = new ElytraBattleGame();
 			currentGame.start();
-			return true;
+			gameStarted = true;
 		}
-		if (g == GameType.KITPVP) {
+		else if (g == GameType.KITPVP) {
 			currentGame = new KitPVPGame(m);
 			currentGame.start();
-			return true;
-		}
-		else {
-			return false;
+			gameStarted = true;
 		}
 		
+		HashMap<String, Kit> kitsCopied = new HashMap<String, Kit>();
+		nextGameKits.entrySet().forEach(e -> {
+			if (e.getValue().getGame() == getCurrentGameType()) {
+				kitsCopied.put(e.getKey(), e.getValue());
+			}
+		});
+		currentGame.getStats().setKits(kitsCopied);
+
+		return gameStarted;
+	}
+	
+	public static void clearKits() {
+		nextGameKits.clear();
+	}
+	
+	public static void putKit(Player p, Kit k) {
+		nextGameKits.put(p.getName(), k);
 	}
 	
 }

@@ -63,6 +63,8 @@ public class TNTPhysicsEvents implements Listener {
 	@EventHandler
 	public void onExplode(EntityExplodeEvent e) {
 		
+		e.setYield(0);
+		
 		List<Block> blockList = e.blockList();
 		blockList.forEach(b -> {
 			if (b.isLiquid()) return;

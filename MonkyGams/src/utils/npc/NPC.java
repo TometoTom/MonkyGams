@@ -26,7 +26,6 @@ import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_15_R1.EntityPlayer;
 import net.minecraft.server.v1_15_R1.MinecraftServer;
 import net.minecraft.server.v1_15_R1.PacketPlayOutEntity.PacketPlayOutEntityLook;
-import utils.game.GameUtils;
 import net.minecraft.server.v1_15_R1.PacketPlayOutEntityDestroy;
 import net.minecraft.server.v1_15_R1.PacketPlayOutEntityHeadRotation;
 import net.minecraft.server.v1_15_R1.PacketPlayOutNamedEntitySpawn;
@@ -34,6 +33,7 @@ import net.minecraft.server.v1_15_R1.PacketPlayOutPlayerInfo;
 import net.minecraft.server.v1_15_R1.PlayerConnection;
 import net.minecraft.server.v1_15_R1.PlayerInteractManager;
 import net.minecraft.server.v1_15_R1.WorldServer;
+import utils.game.GameUtils;
 
 /**
  * Warning: Uses NMS. <b>Version dependent.</b>

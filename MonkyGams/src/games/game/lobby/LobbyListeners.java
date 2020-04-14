@@ -15,6 +15,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -33,7 +34,11 @@ public class LobbyListeners implements Listener {
 	public static ArrayList<String> pvpArea = new ArrayList<String>();
 	public static ArrayList<String> dmtArea = new ArrayList<String>();
 
-
+	@EventHandler
+	public void onExplodeEvent(EntityExplodeEvent e) {
+		e.setCancelled(true);
+	}
+	
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e) {
 

@@ -40,13 +40,14 @@ public abstract class Gadget {
 	 */
 	public abstract void onDisable(Player p);
 	
-	public void enable(Player p) {
+	public boolean enable(Player p) {
 		if (gadgetsInUse.containsKey(p.getName())) {
 			p.sendMessage(GameUtils.getFailureMessage("GADGET", "You cannot use two gadgets at once."));
-			return;
+			return false;
 		}
 		gadgetsInUse.put(p.getName(), this);
 		onEnable(p);
+		return true;
 	}
 	
 	public void disable(Player p) {

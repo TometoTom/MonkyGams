@@ -42,6 +42,7 @@ public class LobbyGame extends Game {
 	private MonkyScoreboard scoreboard;
 	private StackerManager stackerManager = new StackerManager();
 	private DrawingManager drawingManager = new DrawingManager();
+	private KitEntities kitEntities = new KitEntities();
 	
 	private NPC hubber;
 	
@@ -71,7 +72,7 @@ public class LobbyGame extends Game {
 	}
 	
 	public void setQueuedGame(GameType gt) {
-		queuedGame = gt;
+		GameController.endCurrentGame(true, gt);
 	}
 	
 	public void setQueuedMap(Map m) {
@@ -124,11 +125,13 @@ public class LobbyGame extends Game {
 				
 			}
 		});
+		
 		registerEvent(new MapChooserEvents());
 		registerEvent(new StackerEvents());
 		registerEvent(new DrawingChangeColourEvent());
 		registerEvent(GameListeners.getPreventItemDrop());
 		registerEvent(new GameMenuEvents());
+		registerEvent(new KitSelectEvent());
 		
 	}
 
@@ -174,6 +177,7 @@ public class LobbyGame extends Game {
 				p.getInventory().setItem(7, GameMenuEvents.ENDER_EYE);
 		});
 		drawingManager.setup();
+		kitEntities.spawn(lobbyMap.getWorld(), getQueuedGame());
 		registerListeners();
 		doLobbyCountdown();
 		
@@ -192,6 +196,8 @@ public class LobbyGame extends Game {
 		
 		hubber.despawn();
 		hubber.deregister();
+		
+		kitEntities.clearPhysicalSelections(lobbyMap.getWorld());
 		
 		try { 
 			Bukkit.getScheduler().cancelTask(countdownId);

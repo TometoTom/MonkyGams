@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 
@@ -81,7 +82,7 @@ public class DatabaseManager {
 			}
 			else {
 				
-				PlayerStatistics ps = new PlayerStatistics(uuid, PermissionLevel.NONE, 0, new HashMap<>(), 0, 0, 0, 1, "");
+				PlayerStatistics ps = new PlayerStatistics(uuid, PermissionLevel.NONE, 0, new HashMap<>(), 0, 0, 0, 1, "", new HashMap<>(), new ArrayList<>(), "", "");
 				
 				statement = c.prepareStatement("INSERT INTO " + TABLE + " (UUID,DATA) VALUE (?,?)");
 				statement.setString(1, uuid);
