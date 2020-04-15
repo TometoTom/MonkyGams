@@ -59,6 +59,9 @@ public class ClickEventHandler implements Listener {
 
 				PurchaseGUI purchase = (PurchaseGUI) closedGUI;
 				purchase.clearButton(p);
+				
+				if (purchase.success)
+					return;
 
 				MonkyGUI confirm = new MonkyGUI(p, "Abandon the purchase?", 3);
 				MonkyItemStack yes = new MonkyItemStack(Material.LIME_STAINED_GLASS_PANE).setName(ChatColor.GRAY + "Yes, I'd like to abandon the purchase.");

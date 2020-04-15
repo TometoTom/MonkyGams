@@ -26,6 +26,8 @@ public class PurchaseGUI extends MonkyGUI {
 	public int cost;
 	public int maxQuantity;
 	
+	public boolean success = false;
+	
 	public PurchaseGUI(Player p, Material item, String itemName, String itemDescription, int maxQuantity, int cost, PurchaseSuccess onSuccess) {
 		super(p, "Checkout", 6);
 		
@@ -69,6 +71,7 @@ public class PurchaseGUI extends MonkyGUI {
 		
 		setClickEvent(ClickType.DOUBLE_CLICK, (clicker, clickedItem) -> {
 			if (clickedItem.getType() == Material.LIME_STAINED_GLASS_PANE) {
+				success = true;
 				clicker.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 10, 1);
 				clicker.sendMessage(GameUtils.getSuccessMessage("PURCHASE", "Purchase successful!"));
 				GameUtils.delayTask(() -> {
