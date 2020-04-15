@@ -31,6 +31,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import core.Main;
 
+@SuppressWarnings("deprecation")
 public class InteractEvent implements Listener{
 
 	String s = ChatColor.GOLD + "" + ChatColor.BOLD + "SKILL: " + ChatColor.RESET + "" + ChatColor.GRAY;
@@ -377,7 +378,6 @@ public class InteractEvent implements Listener{
 						p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1, 10);
 						
 						ItemStack skull = new ItemStack(Material.LEGACY_SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
-						 
 						SkullMeta meta = (SkullMeta) skull.getItemMeta();
 						meta.setOwner("DavidCameron");
 						skull.setItemMeta(meta);

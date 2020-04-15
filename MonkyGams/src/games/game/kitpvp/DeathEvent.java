@@ -108,7 +108,7 @@ public class DeathEvent implements Listener{
 			
 			e.setDeathMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "DEATH: " + ChatColor.RESET + "" + ChatColor.GRAY + p.getName() + " was killed by " + k.getName() + " with " + with + ".");
 			
-			ItemStack apple = new ItemStack(Material.GOLDEN_APPLE, 3, (short) 1);
+			ItemStack apple = new ItemStack(Material.ENCHANTED_GOLDEN_APPLE);
 			ItemMeta applem = apple.getItemMeta();
 			applem.setUnbreakable(true);
 			applem.setDisplayName(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Golden Apple");

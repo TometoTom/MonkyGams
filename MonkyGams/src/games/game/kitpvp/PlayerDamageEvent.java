@@ -23,6 +23,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import core.Main;
 
+@SuppressWarnings("deprecation")
 public class PlayerDamageEvent implements Listener{
 
 	public static ArrayList<Player> players = new ArrayList<Player>();
